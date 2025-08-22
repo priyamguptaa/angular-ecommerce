@@ -44,21 +44,3 @@
   line-height: 1.5;
   color: #444;
 }
-
-.btn-add {
-  margin-top: 20px;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  background: #009688;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: fit-content;
-}
-
-.btn-add:hover {
-  background: #00796b;
-  transform: translateY(-2px);
-}

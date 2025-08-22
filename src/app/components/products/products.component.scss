@@ -20,6 +20,7 @@
   text-align: center;
   background: white;
   box-shadow: 0 4px 10px rgba(0, 150, 136, 0.1);
+  
 
   img {
     width: 100%;
@@ -45,5 +46,22 @@
     font-size: 13px;
     color: #666;
     margin: 8px 0;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  input, select {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  input {
+    flex: 1;
   }
 }

@@ -40,20 +40,5 @@
             border-radius: 4px;
             border: 1px solid #ccc;
         }
-
-        button {
-            margin-top: 1rem;
-            padding: 10px;
-            background: #009688;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-
-            &:hover {
-                background: #00796b;
-            }
-        }
     }
 }

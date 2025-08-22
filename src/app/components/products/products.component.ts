@@ -1,37 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../interfaces/product.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
-  cart: Product[] = [];
+  // cart: Product[] = [];
+  filteredProducts: Product[] = [];
+  searchTerm: string = '';
+  selectedCategory: string = 'All';
+  categories: string[] = [];
+  subscriptions = new Subscription();
 
   constructor(
     public cartService: CartService,
     private productService: ProductService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.products = this.productService.getProducts();
 
     // Subscribe to cart changes
-    this.cartService.items$.subscribe(items => {
-      this.cart = items;
-    });
+    this.subscriptions.add(this.cartService.items$.subscribe(items => {
+      this.filteredProducts = items;
+    }));
+
+    this.filteredProducts = [...this.products];
+    this.categories = ['All', ...new Set(this.products.map(p => p.category))];
   }
 
   getQuantity(productId: number): number {
-    const item = this.cart.find(p => p.id === productId);
+    const item = this.filteredProducts.find(p => p.id === productId);
     return item ? item.quantity : 0;
   }
 
@@ -45,5 +54,23 @@ export class ProductsComponent implements OnInit {
 
   decreaseQuantity(productId: number) {
     this.cartService.decreaseQuantity(productId);
+  }
+
+  filterProducts() {
+    this.filteredProducts = this.products.filter(p => {
+      const matchesSearch =
+        !this.searchTerm ||
+        p.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        p.description.toLowerCase().includes(this.searchTerm.toLowerCase());
+
+      const matchesCategory =
+        this.selectedCategory === 'All' || p.category === this.selectedCategory;
+
+      return matchesSearch && matchesCategory;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

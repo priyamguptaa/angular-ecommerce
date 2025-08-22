@@ -15,21 +15,21 @@ import { map, Subscription } from 'rxjs';
 export class NavbarComponent {
   cartCount$: any;
   cartBump = false;
-  private sub?: Subscription;
+  subscriptions = new Subscription();
 
   constructor(public cartService: CartService) { }
 
   ngOnInit(): void {
     this.cartCount$ = this.cartService.items$.pipe(map(items => items.length));
 
-    this.sub = this.cartService.bumped$.subscribe(() => {
+    this.subscriptions.add(this.cartService.bumped$.subscribe(() => {
       this.cartBump = true;
       setTimeout(() => (this.cartBump = false), 2000);
-    });
+    }));
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 }
