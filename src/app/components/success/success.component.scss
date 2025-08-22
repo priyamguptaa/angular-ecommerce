@@ -1,0 +1,33 @@
+.success-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    color: #009688;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .back-home {
+    padding: 12px 20px;
+    background: #009688;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #00796b;
+    }
+  }
+}

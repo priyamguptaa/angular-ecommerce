@@ -1,6 +1,6 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 .btn-add {
@@ -17,4 +17,36 @@ body {
 
 .btn-add:hover {
   background: #00796b;
+}
+
+.quantity-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.quantity-toggle button {
+  background: #d3d3d3;
+  color: white;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.quantity-toggle button:hover {
+  background: #00796b;
+  transform: scale(1.05);
+}
+
+.quantity-toggle span {
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
 }

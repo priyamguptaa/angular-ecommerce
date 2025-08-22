@@ -1,1 +1,34 @@
-<p>checkout works!</p>
+<div class="checkout-container">
+  <h2>Checkout</h2>
+
+  <div class="order-summary">
+    <h3>Order Summary</h3>
+    <ul>
+      <li *ngFor="let item of cartItems">
+        {{ item.name }} - ${{ item.price }}
+      </li>
+    </ul>
+    <p class="total">Total: ${{ total }}</p>
+  </div>
+
+  <form (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
+    <h3>Customer Details</h3>
+
+    <label>
+      Name:
+      <input type="text" [(ngModel)]="customer.name" name="name" required />
+    </label>
+
+    <label>
+      Email:
+      <input type="email" [(ngModel)]="customer.email" name="email" required />
+    </label>
+
+    <label>
+      Address:
+      <textarea [(ngModel)]="customer.address" name="address" required></textarea>
+    </label>
+
+    <button type="submit">Place Order</button>
+  </form>
+</div>

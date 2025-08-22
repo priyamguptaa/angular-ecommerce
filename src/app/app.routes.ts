@@ -10,6 +10,7 @@ export const routes: Routes = [
   { path: 'products', component: ProductsComponent },
   { path: 'products/:id', component: ProductDetailComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout', loadComponent: () => import('./components/checkout/checkout.component').then(m => m.CheckoutComponent) },
+  { path: 'success', loadComponent: () => import('./components/success/success.component').then(m => m.SuccessComponent) },
   { path: '**', redirectTo: '' }
 ];

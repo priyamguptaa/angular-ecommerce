@@ -2,12 +2,28 @@
   <h2>🛒 Our Products</h2>
 
   <div class="product-grid">
-    <div class="product-card" *ngFor="let product of products" [routerLink]="['/products', product.id]">
-      <img [src]="product.image" [alt]="product.name" />
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-image" [routerLink]="['/products', product.id]">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+
       <h3>{{ product.name }}</h3>
       <p class="price">${{ product.price }}</p>
       <p class="desc">{{ product.description }}</p>
-      <button class="btn-add" (click)="cartService.addToCart(product);">Add to Cart</button>
+
+      <div class="cart-actions">
+        <!-- If product is already in cart -->
+        <div *ngIf="getQuantity(product.id) > 0; else addBtn" class="quantity-toggle">
+          <button (click)="decreaseQuantity(product.id)">➖</button>
+          <span>{{ getQuantity(product.id) }}</span>
+          <button (click)="increaseQuantity(product.id)">➕</button>
+        </div>
+
+        <!-- Show Add to Cart if not in cart -->
+        <ng-template #addBtn>
+          <button class="btn-add" (click)="addToCart(product)">Add to Cart</button>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>
