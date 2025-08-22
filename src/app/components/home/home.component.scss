@@ -1,0 +1,28 @@
+.hero {
+  // background: #e0f7fa;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 72px - 98px - 72px - 72px);
+  
+  h1 {
+    color: #009688;
+    margin-bottom: 10px;
+  }
+
+  .cta {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #009688;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+
+    &:hover {
+      background: #00796b;
+    }
+  }
+}

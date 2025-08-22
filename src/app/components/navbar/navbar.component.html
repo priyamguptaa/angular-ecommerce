@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <a routerLink="/" class="logo">🛍️ ShopEasy</a>
+  <ul class="nav-links">
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/products">Products</a></li>
+ <a 
+    routerLink="/cart" 
+     routerLinkActive="active"
+    [class.cart-bump]="cartBump"
+    (animationend)="cartBump = false"
+  >
+    🛒 Cart ({{ cartCount$ | async }})
+  </a>
+  </ul>
+</nav>
