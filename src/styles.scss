@@ -91,6 +91,11 @@ body {
   --border: #e5e7eb;
 }
 
+.snack-light {
+  background: #f9fafb !important; // light background
+  color: #1d1d1f !important;      // dark text
+}
+
 /* Dark theme */
 .dark {
   --bg: #0b0f14;
@@ -98,6 +103,11 @@ body {
   --card: #111827;
   --accent: #22d3ee;
   --border: #374151;
+}
+
+.snack-dark {
+  background: #111827 !important; // dark gray
+  color: #e5e7eb !important;      // light gray text
 }
 
 /* Apply variables globally */
