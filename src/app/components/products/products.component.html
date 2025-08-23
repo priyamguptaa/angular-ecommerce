@@ -13,20 +13,29 @@
     <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
       <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
     </select>
+
+ <!-- Sorting -->
+    <select [(ngModel)]="sortOption" (change)="sortProducts()">
+      <option value="default">Sort By</option>
+      <option value="priceLow">Price: Low to High</option>
+      <option value="priceHigh">Price: High to Low</option>
+      <option value="nameAsc">Name: A → Z</option>
+      <option value="nameDesc">Name: Z → A</option>
+    </select>
   </div>
 
   <!-- Product Grid -->
   <div class="product-grid">
-    <div class="product-card" *ngFor="let product of filteredProducts">
-          <div class="product-image" [routerLink]="['/products', product.id]">
+    <div class="product-card" *ngFor="let product of visibleProducts">
+      <div class="product-image" [routerLink]="['/products', product.id]">
         <img [src]="product.image" [alt]="product.name" />
       </div>
-      
+
       <h3>{{ product.name }}</h3>
       <p class="price">${{ product.price }}</p>
       <p class="desc">{{ product.description }}</p>
 
- <div class="cart-actions">
+      <div class="cart-actions">
         <!-- If product is already in cart -->
         <div *ngIf="getQuantity(product.id) > 0; else addBtn" class="quantity-toggle">
           <button (click)="decreaseQuantity(product.id)">➖</button>
@@ -34,11 +43,21 @@
           <button (click)="increaseQuantity(product.id)">➕</button>
         </div>
 
-        <!-- Show Add to Cart if not in cart -->
         <ng-template #addBtn>
           <button class="btn-add" (click)="addToCart(product)">Add to Cart</button>
         </ng-template>
       </div>
     </div>
+  </div>
+
+  <!-- Loading spinner -->
+  <div class="loading" *ngIf="loading">
+    <p>Loading products...</p>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- End message -->
+  <div class="end-message" *ngIf="allLoaded && !loading">
+    <p>You've reached the end of the catalog!</p>
   </div>
 </div>

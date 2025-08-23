@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../interfaces/product.interface';
 import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-products',
@@ -15,12 +16,17 @@ import { Subscription } from 'rxjs';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
-  // cart: Product[] = [];
   filteredProducts: Product[] = [];
   searchTerm: string = '';
   selectedCategory: string = 'All';
   categories: string[] = [];
   subscriptions = new Subscription();
+  sortOption: string = 'default';
+  // Infinite scroll
+  itemsPerLoad = 8;
+  visibleProducts: Product[] = [];
+  loading = false;
+  allLoaded = false;
 
   constructor(
     public cartService: CartService,
@@ -29,14 +35,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.products = this.productService.getProducts();
-
-    // Keep a separate subscription if you need cart info, but don’t overwrite products
-    // this.subscriptions.add(this.cartService.items$.subscribe(() => {
-    // Nothing to update here for products; quantity is derived dynamically
-    // }));
-
     this.filteredProducts = [...this.products];
     this.categories = ['All', ...new Set(this.products.map(p => p.category))];
+    this.loadMore();
   }
 
   getQuantity(productId: number): number {
@@ -68,6 +69,57 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
       return matchesSearch && matchesCategory;
     });
+
+    this.visibleProducts = [];
+    this.allLoaded = false;
+    this.loadMore();
+  }
+
+  sortProducts() {
+    switch (this.sortOption) {
+      case 'priceLow':
+        this.filteredProducts.sort((a, b) => a.price - b.price);
+        break;
+      case 'priceHigh':
+        this.filteredProducts.sort((a, b) => b.price - a.price);
+        break;
+      case 'nameAsc':
+        this.filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'nameDesc':
+        this.filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      default:
+        this.filteredProducts = [...this.products];
+    }
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if (
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+      !this.loading &&
+      !this.allLoaded
+    ) {
+      this.loadMore();
+    }
+  }
+
+  loadMore() {
+    this.loading = true;
+
+    setTimeout(() => {
+      const start = this.visibleProducts.length;
+      const next = this.filteredProducts.slice(start, start + this.itemsPerLoad);
+
+      if (next.length > 0) {
+        this.visibleProducts = [...this.visibleProducts, ...next];
+      } else {
+        this.allLoaded = true;
+      }
+
+      this.loading = false;
+    }, 800);
   }
 
   ngOnDestroy(): void {
