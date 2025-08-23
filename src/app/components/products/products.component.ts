@@ -30,17 +30,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.products = this.productService.getProducts();
 
-    // Subscribe to cart changes
-    this.subscriptions.add(this.cartService.items$.subscribe(items => {
-      this.filteredProducts = items;
-    }));
+    // Keep a separate subscription if you need cart info, but don’t overwrite products
+    // this.subscriptions.add(this.cartService.items$.subscribe(() => {
+    // Nothing to update here for products; quantity is derived dynamically
+    // }));
 
     this.filteredProducts = [...this.products];
     this.categories = ['All', ...new Set(this.products.map(p => p.category))];
   }
 
   getQuantity(productId: number): number {
-    const item = this.filteredProducts.find(p => p.id === productId);
+    const item = this.cartService.getCart().find(p => p.id === productId);
     return item ? item.quantity : 0;
   }
 
