@@ -4,6 +4,16 @@
     <h2>{{ product.name }}</h2>
     <p class="price">${{ product.price }}</p>
     <p>{{ product.description }}</p>
-    <button (click)="cartService.addToCart(product)" class="btn-add">Add to Cart</button>
+    <div class="cart-actions">
+        <div *ngIf="getQuantity(product.id) > 0; else addBtn" class="quantity-toggle">
+          <button (click)="decreaseQuantity(product.id)">➖</button>
+          <span>{{ getQuantity(product.id) }}</span>
+          <button (click)="increaseQuantity(product.id)">➕</button>
+        </div>
+
+        <ng-template #addBtn>
+          <button class="btn-add" (click)="addToCart(product)">Add to Cart</button>
+        </ng-template>
+      </div>
   </div>
 </div>

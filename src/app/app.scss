@@ -8,4 +8,10 @@
     flex: 1;
     padding: 72px 60px;
     height: calc(100vh - 72px - 98px);
+
+    &:has(app-product-detail) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

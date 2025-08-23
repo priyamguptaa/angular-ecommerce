@@ -35,7 +35,7 @@
       <p class="price">${{ product.price }}</p>
       <p class="desc">{{ product.description }}</p>
 
-      <div class="cart-actions">
+      <div class="cart-actions center">
         <!-- If product is already in cart -->
         <div *ngIf="getQuantity(product.id) > 0; else addBtn" class="quantity-toggle">
           <button (click)="decreaseQuantity(product.id)">➖</button>

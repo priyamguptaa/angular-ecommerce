@@ -20,4 +20,22 @@ export class ProductDetailComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.product = this.productService.getProductById(id);
   }
+
+  getQuantity(productId: number): number {
+    const item = this.cartService.getCart().find(p => p.id === productId);
+    return item ? item.quantity : 0;
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+  }
+
+  increaseQuantity(productId: number) {
+    this.cartService.increaseQuantity(productId);
+  }
+
+  decreaseQuantity(productId: number) {
+    this.cartService.decreaseQuantity(productId);
+  }
+  
 }

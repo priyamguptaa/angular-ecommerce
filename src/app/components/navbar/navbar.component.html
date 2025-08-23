@@ -9,7 +9,10 @@
     [class.cart-bump]="cartBump"
     (animationend)="cartBump = false"
   >
-    🛒 Cart ({{ cartCount$ | async }})
+    Cart ({{ cartCount$ | async }})
   </a>
+  <button class="theme-toggle" (click)="toggleTheme()">
+     {{ themeService.isDarkMode() ? '🌙' : '☀️' }}
+   </button>
   </ul>
 </nav>

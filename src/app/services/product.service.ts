@@ -7,10 +7,9 @@ import { PRODUCTS } from '../utils/product.util';
     providedIn: 'root'
 })
 export class ProductService {
-    private products: Product[] = [];
+    private products: Product[] = PRODUCTS;
 
     getProducts(): Product[] {
-        this.products = PRODUCTS;
         return this.products;
     }
 

@@ -38,6 +38,13 @@ body {
   cursor: pointer;
 }
 
+.cart-actions {
+  display: flex;
+  &.center {
+    justify-content: center;
+  }
+}
+
 .quantity-toggle {
   display: flex;
   align-items: center;
@@ -73,4 +80,40 @@ body {
 // Margin Classes
 .mr-8 {
   margin-right: 8px;
+}
+
+/* Light theme (default) */
+:root {
+  --bg: #ffffff;
+  --text: #00796b;
+  --card: #ffffff;
+  --accent: #0ea5a4;
+  --border: #e5e7eb;
+}
+
+/* Dark theme */
+.dark {
+  --bg: #0b0f14;
+  --text: #e5e7eb;
+  --card: #111827;
+  --accent: #22d3ee;
+  --border: #374151;
+}
+
+/* Apply variables globally */
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.card, .product-card, mat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
 }
