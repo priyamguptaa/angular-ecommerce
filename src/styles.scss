@@ -127,3 +127,42 @@ body {
   background: var(--accent);
   color: #fff;
 }
+
+@media (max-width: 480px), (max-width: 767px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  .navbar {
+    padding: 8px 12px;
+
+    .logo {
+      font-size: 15px !important;
+      font-weight: 400;
+    }
+
+    .nav-links {
+      gap: 12px;
+
+      a {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .main-content {
+    padding: 72px 30px !important;
+
+    .products-container {
+      padding: 0 !important;
+
+      .filters {
+        flex-direction: column;
+      }
+    }
+
+    .cart-container {
+      padding: 0 !important;
+    }
+  }
+}
